@@ -1,0 +1,48 @@
+function [w EQM]=rls_rule(H,y,alfa,Ne)
+%%
+%% Implementacao da regra RLS (recursive least squares)
+%% para treinamento da camada de saida da rede ELM
+%% 
+%% y (Ntr x 1): Matriz de vetores de saidas-alvo
+%% alfa (escalar): fator de esquecimento
+%% Z (Nh x Ntr): Matriz de dados para treinamento
+%% Ne: Numero de epocas de treinamento
+
+n=size(Z);  % Dimensoes da matriz de vetores de entrada
+Q=n(1); % Num. neuronios ocultos
+Ntr=n(2); % Num. vetores de treinamento
+
+w=rand(Q,1);  % Vetor de pesos iniciais
+
+% Inicia matrizes P para cada neuronio de saida
+P=0.1*eye(Q);
+
+for i=1:Ne,
+    I=randperm(Ntr);
+    Z=Z(:,I);  % Embaralha vetores de treinamento
+    y=y(I); % mantem correspondencia com rotulos
+    
+    EQ=0;  % Erro Quadratico
+    for t=1:Ntr,
+        z=Z(:,t);  % Entrada atual
+        
+        y_pred=w'*z;  % vetor de saidas preditas na iteracao t
+        
+        erro=y(t)-y_pred; % vetor de erros na iteracao t
+        
+        % Passo 1: Atualiza ganho de Kalman
+        num=P*z;
+        den=alfa + z'*P*z;
+        Kgain=num/den;
+            
+        % Passo 2: Atualiza vetor de pesos do i-esimo neuronio de saida
+        w = w + Kgain*erro; % Regra RLS
+                        
+        % Passo 3: Atualiza matriz P
+        P = (1/alfa)*(P - Kgain*z'*P);
+        end
+        
+        EQ=EQ+sum(erro.^2);
+    end
+    EQM(i) = EQ/Ntr;
+end

@@ -1,0 +1,34 @@
+k3 ### Generation 324 ###
+
+ Best fitness(bic): 30275.9992
+ Best SSE: 688504.7711
+ 566.5/{1 + exp[-0.5192*(x - 8.899)]}
+
+
+
+k4 ### Generation 393 ###
+
+ Best fitness(bic): 30283.1743
+ Best SSE: 688338.4490
+ -2.769 + (567.8 + -2.769)/{1 + exp[-0.5147*(x - 8.889)]}
+
+
+
+k5  ### Generation 684 ###
+
+ Best fitness(bic): 30252.6982
+ Best SSE: 676752.2284
+ -17.85 + (536 + -17.85)/{{1 + exp[-0.7301*(x - 10.34)]}^0.4548}
+
+OBS Raramente converge para este, que é melhor.
+ Best fitness(bic): 30217.8207
+ Best SSE: 666342.6960
+ 512.4 + (-14.2 - 512.4)/{{1 + exp[0.3826*(x - 23.72)]}^239.2}
+
+
+k6 ### Generation 1384 ###
+OBS Parâmetros não convergem, mas desempenho sim.
+
+ Best fitness(bic): 30260.4169
+ Best SSE: 676752.2284
+ -17.85 + (5.159 + -17.85)/{{0.0009172 + exp[-0.7301*(x - 0.7638)]}^0.4548}

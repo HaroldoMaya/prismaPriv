@@ -1,0 +1,35 @@
+function [w EQM]=lms_rule(Z,y,lr,Ne)
+%%
+%% Implementacao matricial da regra LMS para treinamento 
+%% da camada de saida da rede ELM
+%% 
+%% y (Ntr x 1): vetor de saidas-alvo
+%% lr (escalar): passo de aprendizado
+%% Z (Q x Ntr): Matriz de dados para treinamento
+%% Ne: Numero de epocas de treinamento
+
+n=size(Z);  % Dimensoes da matriz de vetores de entrada
+Q=n(1); % Num. neuronios ocultos
+Ntr=n(2); % Num. vetores de treinamento
+
+w=rand(Q,1);  % Vetor de pesos iniciais
+
+for i=1:Ne,
+    I=randperm(Ntr);
+    Z=Z(:,I);  % Embaralha vetores de treinamento
+    y=y(I);  % Mantem correspondecia com rotulos
+    
+    EQ=0;  % Erro Quadratico
+    for t=1:Ntr,
+	z=Z(:,t);  % Input at iteration t
+
+        y_pred=w'*z;  % saida predita na iteracao t
+        
+        erro=y(t)-y_pred; % vetor de erros na iteracao t
+        
+        w = w + lr*erro*z/(z'*z);  % Regra LMS normalizado
+        
+        EQ=EQ+sum(erro.^2);
+    end
+    EQM(i) = EQ/(2*Ntr);  % Mean squared error per epoch
+end
